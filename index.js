@@ -7,6 +7,7 @@ const layout = new Layout({
   pathname: "/testeando"
 });
 
+//registro podlets
 const navFragment = layout.client.register({
   name: "navFragment",
   uri: "http://localhost:3001/manifest.json"
@@ -29,7 +30,14 @@ const imageFragment = layout.client.register({
   uri: "http://localhost:3003/manifest.json"
 });
 
+//middlewares
 app.use(layout.middleware());
+app.use(express.static(__dirname + "/public"));
+layout.css([
+  { value: "./css/main.css" },
+  { value: "./css/footer.css" },
+  { value: "./css/nav.css" }
+]);
 
 app.get("/testeando", async (req, res) => {
   const incoming = res.locals.podium;
@@ -44,11 +52,13 @@ app.get("/testeando", async (req, res) => {
   incoming.view.title = "Probando un layout con 5 podlets";
   res.podiumSend(`
         ${podA}
+        <div class="container">
         <h1>Titulo de prueba</h1>
         ${podB}
         ${podE}
         ${podC}
         ${podD}
+        </div>
   `);
 });
 app.listen(3000, () => console.info("Layout serve on"));

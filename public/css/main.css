@@ -1,0 +1,9 @@
+*, html{
+    padding: 0%;
+    border: 0%;
+}
+
+.container{
+    margin: auto;
+    width: 85%;
+    z-index: 10;}
