@@ -1,6 +1,5 @@
 const express = require("express");
 const Layout = require("@podium/layout");
-
 const app = express();
 
 const layout = new Layout({
@@ -19,15 +18,15 @@ const sectionsFragment = layout.client.register({
 });
 const textFragment = layout.client.register({
   name: "textFragment",
-  uri: "http://localhost:3003/manifest.json"
+  uri: "http://localhost:3004/manifest.json"
 });
 const footerFragment = layout.client.register({
   name: "footerFragment",
-  uri: "http://localhost:3004/manifest.json"
+  uri: "http://localhost:3005/manifest.json"
 });
 const imageFragment = layout.client.register({
   name: "imageFragment",
-  uri: "http://localhost:3005/manifest.json"
+  uri: "http://localhost:3003/manifest.json"
 });
 
 app.use(layout.middleware());
