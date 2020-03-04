@@ -4,7 +4,8 @@ const app = express();
 
 const layout = new Layout({
   name: "myLayout",
-  pathname: "/testeando"
+  pathname: "/",
+  development:true
 });
 
 //registro podlets
@@ -30,25 +31,28 @@ const imageFragment = layout.client.register({
   uri: "http://localhost:3003/manifest.json"
 });
 
+
 //middlewares
 app.use(layout.middleware());
-app.use(express.static(__dirname + "/public"));
-layout.css([
-  { value: "./css/main.css" },
-  { value: "./css/footer.css" },
-  { value: "./css/nav.css" }
-]);
 
-app.get("/testeando", async (req, res) => {
+app.use(express.static(__dirname + "/public"));
+// layout.css([
+//   { value: "./css/main.css" },
+//   { value: "./css/nav.css" }
+// ]);
+
+
+app.get("/", async (req, res) => {
   const incoming = res.locals.podium;
   const [podA, podB, podC, podD, podE] = await Promise.all([
     navFragment.fetch(incoming),
     sectionsFragment.fetch(incoming),
     textFragment.fetch(incoming),
     footerFragment.fetch(incoming),
-    imageFragment.fetch(incoming)
+    imageFragment.fetch(incoming),
   ]);
-
+  console.info(podD.css);
+  console.info(podD);
   incoming.view.title = "Probando un layout con 5 podlets";
   res.podiumSend(`
         ${podA}
@@ -57,8 +61,10 @@ app.get("/testeando", async (req, res) => {
         ${podB}
         ${podE}
         ${podC}
-        ${podD}
+        <section>${podD}</section>
+        
         </div>
   `);
 });
-app.listen(3000, () => console.info("Layout serve on"));
+app.listen(3000, () =>{ console.info("Layout serve on");
+});
